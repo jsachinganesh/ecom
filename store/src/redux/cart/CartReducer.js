@@ -1,5 +1,8 @@
+import { removeItemCheck } from './CartAction';
 import CartActionTypes from './CartTypes'
 import { addItemToCart } from './cartUtils';
+import { removeItemCheckOne } from './cartUtils';
+
 
 const INITIAL_STATE = {
     hidden: true,
@@ -18,10 +21,15 @@ const cardReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 cartItems: addItemToCart(state.cartItems,action.payload)
           }
-      case CartActionTypes.CLEAR_ITEM_FROM_CART:
+        case CartActionTypes.CLEAR_ITEM_FROM_CART:
+          return {
+            ...state,
+            cartItems: state.cartItems.filter(cartI => cartI.id !== action.payload.id)
+        }
+      case CartActionTypes.removeItemCheck:
         return {
           ...state,
-          cartItems: state.cartItems.filter(cartI => cartI.id !== action.payload.id)
+          cartItems: removeItemCheckOne(state.cartItems,action.payload)
         }
       
       default:
