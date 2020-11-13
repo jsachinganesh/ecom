@@ -1,5 +1,4 @@
 import MenuItem from '../menu-item/menuItem'
-import React, { Component } from 'react';
 import './Directory.scss'
 import { connect } from 'react-redux';
 import { selectDirectorySections } from './directorySelectors';
