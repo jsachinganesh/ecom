@@ -5,7 +5,6 @@ import { selectDirectorySections } from './directorySelectors';
 import { createStructuredSelector } from 'reselect';
 
 const Directory = ({sections}) => {
-   
         return (
             <div className="directory-menu">
                 {
@@ -20,6 +19,9 @@ const Directory = ({sections}) => {
 
 
 
+// const mapStateToProps = (state)=>({
+//   sections:state.directory.sections
+// })
 const mapStateToProps = createStructuredSelector({
   sections:selectDirectorySections
 })

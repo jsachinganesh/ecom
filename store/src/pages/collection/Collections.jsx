@@ -4,7 +4,7 @@ import CollectionItem from '../../components/collection-item/CollectionItem';
 import { connect } from 'react-redux';
 import { selectCollection } from '../../redux/shop/ShopSelector';
 
-function Collection({ collection }) {
+function Collection({ collection}) {
     const { title, items } = collection;
     return (
         <div className="collection-page">
@@ -20,7 +20,7 @@ function Collection({ collection }) {
 
 function mapStateToProps(state, ownProps) {
     return {
-        collection: selectCollection(ownProps.match.params.collectionId)(state)
+        collection: selectCollection(ownProps.match.params.collectionId)(state),
     }
 }
 

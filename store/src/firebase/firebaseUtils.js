@@ -15,6 +15,11 @@ const config = {
     measurementId: "G-CEJVPNYN04"
 };
 
+firebase.initializeApp(config);
+export const auth = firebase.auth();
+export const firestore = firebase.firestore();
+
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
     if (!userAuth) {
         return;
@@ -44,10 +49,41 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 }
 
-firebase.initializeApp(config);
+export const addCollectionAndDocuments = async (collectionKey, objectToAdd) => {
+    const collectionRef = firestore.collection(collectionKey);
 
-export const auth = firebase.auth();
-export const firestore = firebase.firestore();
+    const batch = firestore.batch();
+    objectToAdd.forEach((obj) => {
+        const newDocRef = collectionRef.doc();
+        batch.set(newDocRef, obj);
+    })
+
+    return await batch.commit();
+
+}
+
+export const convertCollectionSnapshotToMap = (collections) => {
+    const transformedcollection = collections.docs.map(doc => {
+        const { title, items } = doc.data();
+
+        return {
+            routeName: encodeURI(title.toLowerCase()),
+            id: doc.id,
+            title,
+            items
+        };
+    });
+
+    
+    return transformedcollection.reduce((acc, col) => {
+        acc[col.title.toLowerCase()] = col;
+        return acc;
+    }, {});
+    
+}
+
+
+
 
 const Provider = new firebase.auth.GoogleAuthProvider();
 Provider.setCustomParameters({ prompt: 'select_account' });
